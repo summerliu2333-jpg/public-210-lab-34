@@ -4,6 +4,7 @@
 #include <queue>
 #include <stack>
 #include <string>
+#include <limits>
 using namespace std;
 
 struct Edge {
@@ -98,6 +99,53 @@ public:
         }
     }
 
+    void safestPaths(int start) {
+        const int INF = numeric_limits<int>::max();
+        int n = adjList.size();
+
+        vector<int> dist(n, INF);
+        vector<bool> visited(n, false);
+
+        dist[start] = 0;
+
+        for (int count = 0; count < n - 1; ++count) {
+            int current = -1;
+
+            for (int i = 0; i < n; ++i) {
+                if (!visited[i] && (current == -1 || dist[i] < dist[current])) {
+                    current = i;
+                }
+            }
+
+            if (current == -1 || dist[current] == INF) {
+                break;
+            }
+
+            visited[current] = true;
+
+            for (const Edge& edge : adjList[current]) {
+                int next = edge.to;
+
+                if (!visited[next] && dist[current] + edge.danger < dist[next]) {
+                    dist[next] = dist[current] + edge.danger;
+                }
+            }
+        }
+
+        cout << "\nSafest paths from " << locations[start] << ":\n";
+        cout << "========================================\n";
+
+        for (int i = 0; i < n; ++i) {
+            cout << start << " -> " << i << " : ";
+
+            if (dist[i] == INF) {
+                cout << "unreachable\n";
+            } else {
+                cout << dist[i] << " total danger\n";
+            }
+        }
+    }
+
     void BFS(int start) {
         vector<bool> visited(adjList.size(), false);
         queue<int> q;
@@ -133,6 +181,8 @@ int main() {
     gameMap.displayMap();
     gameMap.DFS(0);
     gameMap.BFS(0);
+    gameMap.safestPaths(0);
+
 
     return 0;
 }
