@@ -146,6 +146,53 @@ public:
         }
     }
 
+    void minimumDangerTree() {
+        const int INF = numeric_limits<int>::max();
+        int n = adjList.size();
+
+        vector<int> key(n, INF);
+        vector<int> parent(n, -1);
+        vector<bool> inMST(n, false);
+
+        key[0] = 0;
+
+        for (int count = 0; count < n - 1; ++count) {
+            int current = -1;
+
+            for (int i = 0; i < n; ++i) {
+                if (!inMST[i] && (current == -1 || key[i] < key[current])) {
+                    current = i;
+                }
+            }
+
+            if (current == -1) {
+                break;
+            }
+
+            inMST[current] = true;
+
+            for (const Edge& edge : adjList[current]) {
+                int next = edge.to;
+
+                if (!inMST[next] && edge.danger < key[next]) {
+                    key[next] = edge.danger;
+                    parent[next] = current;
+                }
+            }
+        }
+
+        cout << "\nMinimum Danger Spanning Tree:\n";
+        cout << "========================================\n";
+
+        for (int i = 1; i < n; ++i) {
+            if (parent[i] != -1) {
+                cout << "Edge from " << parent[i] << " - " << locations[parent[i]]
+                     << " to " << i << " - " << locations[i]
+                     << " | danger level: " << key[i] << endl;
+            }
+        }
+    }
+
     void BFS(int start) {
         vector<bool> visited(adjList.size(), false);
         queue<int> q;
@@ -182,7 +229,7 @@ int main() {
     gameMap.DFS(0);
     gameMap.BFS(0);
     gameMap.safestPaths(0);
-
+    gameMap.minimumDangerTree();
 
     return 0;
 }
