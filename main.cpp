@@ -224,12 +224,43 @@ public:
 
 int main() {
     GameMap gameMap;
+    int choice;
 
-    gameMap.displayMap();
-    gameMap.DFS(0);
-    gameMap.BFS(0);
-    gameMap.safestPaths(0);
-    gameMap.minimumDangerTree();
+    do {
+        cout << "\nGame Map Navigation Menu:\n";
+        cout << "[1] Display game map\n";
+        cout << "[2] Scout nearby safe zones (BFS)\n";
+        cout << "[3] Explore deep dangerous routes (DFS)\n";
+        cout << "[4] Find safest paths\n";
+        cout << "[5] Build minimum danger network\n";
+        cout << "[0] Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                gameMap.displayMap();
+                break;
+            case 2:
+                gameMap.BFS(0);
+                break;
+            case 3:
+                gameMap.DFS(0);
+                break;
+            case 4:
+                gameMap.safestPaths(0);
+                break;
+            case 5:
+                gameMap.minimumDangerTree();
+                break;
+            case 0:
+                cout << "Program exited.\n";
+                break;
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 0);
 
     return 0;
 }
