@@ -91,17 +91,21 @@ public:
 };
 
 int main() {
-    Graph graph(7);
+    Graph graph(9);
 
-    graph.addEdge(0, 1, 12);
-    graph.addEdge(0, 2, 8);
-    graph.addEdge(0, 3, 21);
-    graph.addEdge(2, 3, 6);
-    graph.addEdge(2, 6, 2);
-    graph.addEdge(2, 4, 4);
-    graph.addEdge(2, 5, 5);
-    graph.addEdge(5, 6, 6);
-    graph.addEdge(4, 5, 9);
+    graph.addEdge(0, 1, 8);
+    graph.addEdge(0, 2, 21);
+    graph.addEdge(1, 2, 6);
+    graph.addEdge(1, 3, 5);
+    graph.addEdge(1, 4, 4);
+    graph.addEdge(2, 7, 11);
+    graph.addEdge(2, 8, 8);
+    graph.addEdge(3, 4, 9);
+    graph.addEdge(5, 6, 10);
+    graph.addEdge(5, 7, 15);
+    graph.addEdge(5, 8, 5);
+    graph.addEdge(6, 7, 3);
+    graph.addEdge(6, 8, 7);
 
     graph.printGraph();
     cout << endl;
